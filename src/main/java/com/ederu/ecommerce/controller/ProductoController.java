@@ -76,4 +76,10 @@ public class ProductoController {
 	public String mostrar2() {
 		return "productos/mostrar2";
 	}
+	
+	@GetMapping("/delete/{id}")
+	public String delete(@PathVariable Integer id, Model model) {
+		productoService.delete(id);
+		return "redirect:/productos";
+	}
 }
