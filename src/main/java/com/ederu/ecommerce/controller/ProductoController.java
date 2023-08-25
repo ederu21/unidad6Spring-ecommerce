@@ -5,11 +5,13 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ederu.ecommerce.model.Producto;
@@ -59,5 +61,19 @@ public class ProductoController {
 	public String update(Producto producto) {
 		productoService.update(producto);
 		return "redirect:/productos";
+	}
+	
+	@PostMapping(path ="/mostrar", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String recibirId(@RequestBody String user,  Model model) {
+		LOOGER.info("Este es la cadena recibida: {}", user );
+		String[] splitted = user.split("&");
+		splitted=splitted[splitted.length-1].split("=");
+		model.addAttribute("usuario", splitted[1]);
+		return "productos/mostrar";
+	}
+	
+	@GetMapping("/mostrar2")
+	public String mostrar2() {
+		return "productos/mostrar2";
 	}
 }
